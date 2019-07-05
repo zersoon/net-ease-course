@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demo</title>
+</head>
+<body>
+    <script src="./stream.js"></script>
+    <script>
+        console.log(stream.unique([1, 2, 3, 4, 5, 1, 2]));
+        console.log(stream([1, 2, 3, 4, 5, 1, 5, "A", "a"]).chain().unique(function (key) {
+            return typeof key === "string" ? key.toLocaleLowerCase() : key;
+        }).map1().values());
+    </script>
+</body>
+</html>
