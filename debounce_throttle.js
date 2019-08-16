@@ -1,11 +1,25 @@
 // 防抖 触发高频事件后n秒内函数只会执行一次，如果n秒内高频事件再次被触发，则重新计算时间
-function debounce(fn) {
-  let timeout = null; //创建一个标记用来存放定时器的返回值
-  return function () {
-    clearTimeout(timeout); // 每当用户输入时，把前一个setTimeout清掉
-    timeout = setTimeout(() => { //然后又创建一个新的setTimeout,这样就能保证输入字符后的 interval 间隔内如果还有字符输入的话，就不会执行 fn 函数
-      fn.apply(this, arguments);
-    }, 5000)
+function debounce(fn, wait = 50, immediate = true) {
+  let timer = null; //创建一个标记用来存放定时器的返回值
+  let rs;
+  return function (...args) {
+    if(timer) {
+      clearTimeout(timer);
+    }
+    if(immediate) {
+      if(!timer) {
+        rs = fn.apply(this, args);
+      }
+      timer = setTimeout(() => {
+        timer = null
+      }, wait)
+    } else {
+      timer = setTimeout(() => {
+        fn.apply(this, args)
+      }, wait)
+    }
+    return rs;
+    
   };
 }
 
